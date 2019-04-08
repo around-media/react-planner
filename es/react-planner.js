@@ -10,8 +10,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Fragment } from 'react';
+import { string, func, number, instanceOf, arrayOf, object, element, bool, array } from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -95,24 +95,66 @@ var ReactPlanner = function (_Component) {
           height = _props2.height,
           state = _props2.state,
           stateExtractor = _props2.stateExtractor,
-          props = _objectWithoutProperties(_props2, ['width', 'height', 'state', 'stateExtractor']);
+          CustomUI = _props2.CustomUI,
+          props = _objectWithoutProperties(_props2, ['width', 'height', 'state', 'stateExtractor', 'CustomUI']);
 
       var contentW = width - toolbarW - sidebarW;
-      var toolbarH = height - footerBarH;
       var contentH = height - footerBarH;
+      var toolbarH = height - footerBarH;
       var sidebarH = height - footerBarH;
+      if (CustomUI) {
+        contentW = width;
+        contentH = height;
+      }
 
       var extractedState = stateExtractor(state);
+      var content = React.createElement(Content, _extends({
+        width: contentW,
+        height: contentH,
+        state: extractedState
+      }, props, {
+        onWheel: function onWheel(event) {
+          return event.preventDefault();
+        }
+      }));
+
+      var planner = void 0;
+      if (CustomUI) {
+        contentW = width;
+        contentH = height;
+        planner = React.createElement(
+          Fragment,
+          null,
+          CustomUI,
+          content
+        );
+      } else {
+        planner = React.createElement(
+          Fragment,
+          null,
+          React.createElement(Toolbar, _extends({
+            width: toolbarW,
+            height: toolbarH,
+            state: extractedState
+          }, props)),
+          content,
+          React.createElement(Sidebar, _extends({
+            width: sidebarW,
+            height: sidebarH,
+            state: extractedState
+          }, props)),
+          React.createElement(FooterBar, _extends({
+            width: width,
+            height: footerBarH,
+            state: extractedState
+          }, props))
+        );
+      }
 
       return React.createElement(
         'div',
         { style: _extends({}, wrapperStyle, { height: height }) },
-        React.createElement(Toolbar, _extends({ width: toolbarW, height: toolbarH, state: extractedState }, props)),
-        React.createElement(Content, _extends({ width: contentW, height: contentH, state: extractedState }, props, { onWheel: function onWheel(event) {
-            return event.preventDefault();
-          } })),
-        React.createElement(Sidebar, _extends({ width: sidebarW, height: sidebarH, state: extractedState }, props)),
-        React.createElement(FooterBar, _extends({ width: width, height: footerBarH, state: extractedState }, props))
+        planner
       );
     }
   }]);
@@ -121,31 +163,32 @@ var ReactPlanner = function (_Component) {
 }(Component);
 
 ReactPlanner.propTypes = {
-  translator: PropTypes.instanceOf(Translator),
-  catalog: PropTypes.instanceOf(Catalog),
-  allowProjectFileSupport: PropTypes.bool,
-  plugins: PropTypes.arrayOf(PropTypes.func),
-  autosaveKey: PropTypes.string,
-  autosaveDelay: PropTypes.number,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  stateExtractor: PropTypes.func.isRequired,
-  toolbarButtons: PropTypes.array,
-  sidebarComponents: PropTypes.array,
-  footerbarComponents: PropTypes.array,
-  customContents: PropTypes.object,
-  softwareSignature: PropTypes.string
+  translator: instanceOf(Translator),
+  catalog: instanceOf(Catalog),
+  allowProjectFileSupport: bool,
+  plugins: arrayOf(func),
+  autosaveKey: string,
+  autosaveDelay: number,
+  width: number.isRequired,
+  height: number.isRequired,
+  stateExtractor: func.isRequired,
+  toolbarButtons: array,
+  sidebarComponents: array,
+  footerbarComponents: array,
+  customContents: object,
+  softwareSignature: string,
+  CustomUI: element
 };
 
 ReactPlanner.contextTypes = {
-  store: PropTypes.object.isRequired
+  store: object.isRequired
 };
 
 ReactPlanner.childContextTypes = _extends({}, objectsMap(actions, function () {
-  return PropTypes.object;
+  return object;
 }), {
-  translator: PropTypes.object,
-  catalog: PropTypes.object
+  translator: object,
+  catalog: object
 });
 
 ReactPlanner.defaultProps = {
@@ -157,7 +200,8 @@ ReactPlanner.defaultProps = {
   toolbarButtons: [],
   sidebarComponents: [],
   footerbarComponents: [],
-  customContents: {}
+  customContents: {},
+  CustomUI: null
 };
 
 //redux connect
