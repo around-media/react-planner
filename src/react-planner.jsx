@@ -71,6 +71,7 @@ class ReactPlanner extends Component {
       state,
       stateExtractor,
       CustomUI,
+      className,
       ...props
     } = this.props;
 
@@ -100,7 +101,7 @@ class ReactPlanner extends Component {
       contentH = height;
       planner = (
         <Fragment>
-          {CustomUI}
+          <CustomUI state={extractedState} {...props} />
           {content}
         </Fragment>
       );
@@ -130,7 +131,11 @@ class ReactPlanner extends Component {
       );
     }
 
-    return <div style={{ ...wrapperStyle, height }}>{planner}</div>;
+    return (
+      <div className={className} style={{ ...wrapperStyle, height }}>
+        {planner}
+      </div>
+    );
   }
 }
 
@@ -149,7 +154,8 @@ ReactPlanner.propTypes = {
   footerbarComponents: array,
   customContents: object,
   softwareSignature: string,
-  CustomUI: element
+  CustomUI: element,
+  className: string
 };
 
 ReactPlanner.contextTypes = {
@@ -172,7 +178,8 @@ ReactPlanner.defaultProps = {
   sidebarComponents: [],
   footerbarComponents: [],
   customContents: {},
-  CustomUI: null
+  CustomUI: null,
+  className: ''
 };
 
 //redux connect

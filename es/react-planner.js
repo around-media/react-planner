@@ -96,7 +96,8 @@ var ReactPlanner = function (_Component) {
           state = _props2.state,
           stateExtractor = _props2.stateExtractor,
           CustomUI = _props2.CustomUI,
-          props = _objectWithoutProperties(_props2, ['width', 'height', 'state', 'stateExtractor', 'CustomUI']);
+          className = _props2.className,
+          props = _objectWithoutProperties(_props2, ['width', 'height', 'state', 'stateExtractor', 'CustomUI', 'className']);
 
       var contentW = width - toolbarW - sidebarW;
       var contentH = height - footerBarH;
@@ -125,7 +126,7 @@ var ReactPlanner = function (_Component) {
         planner = React.createElement(
           Fragment,
           null,
-          CustomUI,
+          React.createElement(CustomUI, _extends({ state: extractedState }, props)),
           content
         );
       } else {
@@ -153,7 +154,7 @@ var ReactPlanner = function (_Component) {
 
       return React.createElement(
         'div',
-        { style: _extends({}, wrapperStyle, { height: height }) },
+        { className: className, style: _extends({}, wrapperStyle, { height: height }) },
         planner
       );
     }
@@ -177,7 +178,8 @@ ReactPlanner.propTypes = {
   footerbarComponents: array,
   customContents: object,
   softwareSignature: string,
-  CustomUI: element
+  CustomUI: element,
+  className: string
 };
 
 ReactPlanner.contextTypes = {
@@ -201,7 +203,8 @@ ReactPlanner.defaultProps = {
   sidebarComponents: [],
   footerbarComponents: [],
   customContents: {},
-  CustomUI: null
+  CustomUI: null,
+  className: ''
 };
 
 //redux connect
