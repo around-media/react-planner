@@ -155,7 +155,7 @@ ReactPlanner.propTypes = {
   footerbarComponents: array,
   customContents: object,
   softwareSignature: string,
-  CustomUI: oneOfType(element, func),
+  CustomUI: oneOfType([element, func]),
   className: string
 };
 
