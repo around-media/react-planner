@@ -11,7 +11,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import React, { Component, Fragment } from 'react';
-import { string, func, number, instanceOf, arrayOf, object, element, bool, array } from 'prop-types';
+import { string, func, number, instanceOf, arrayOf, object, element, bool, array, oneOfType } from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -178,7 +178,7 @@ ReactPlanner.propTypes = {
   footerbarComponents: array,
   customContents: object,
   softwareSignature: string,
-  CustomUI: element,
+  CustomUI: oneOfType(element, func),
   className: string
 };
 
