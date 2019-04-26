@@ -2,6 +2,7 @@ import {
   NEW_PROJECT,
   LOAD_PROJECT,
   SAVE_PROJECT,
+  EXPORT_PROJECT,
   OPEN_CATALOG,
   SELECT_TOOL_EDIT,
   UNSELECT_ALL,
@@ -54,6 +55,14 @@ export function saveProject() {
   };
 }
 
+export function exportProject(context, catalog) {
+  return {
+    type: EXPORT_PROJECT,
+    context,
+    catalog
+  };
+}
+
 export function openCatalog() {
   return {
     type: OPEN_CATALOG
@@ -87,7 +96,6 @@ export function unselectAll() {
   };
 }
 
-
 export function setProperties(properties) {
   return {
     type: SET_PROPERTIES,
@@ -96,8 +104,10 @@ export function setProperties(properties) {
 }
 
 export function setItemsAttributes(itemsAttributes) {
-
-  itemsAttributes = itemsAttributes.set('rotation', parseFloat(itemsAttributes.get('rotation')));
+  itemsAttributes = itemsAttributes.set(
+    'rotation',
+    parseFloat(itemsAttributes.get('rotation'))
+  );
 
   return {
     type: SET_ITEMS_ATTRIBUTES,
@@ -106,12 +116,23 @@ export function setItemsAttributes(itemsAttributes) {
 }
 
 export function setLinesAttributes(linesAttributes) {
-
   linesAttributes = linesAttributes.withMutations(attributes => {
-    attributes.setIn(['vertexOne', 'x'], parseFloat(linesAttributes.getIn(['vertexOne', 'x'])));
-    attributes.setIn(['vertexOne', 'y'], parseFloat(linesAttributes.getIn(['vertexOne', 'y'])));
-    attributes.setIn(['vertexTwo', 'x'], parseFloat(linesAttributes.getIn(['vertexTwo', 'x'])));
-    attributes.setIn(['vertexTwo', 'y'], parseFloat(linesAttributes.getIn(['vertexTwo', 'y'])));
+    attributes.setIn(
+      ['vertexOne', 'x'],
+      parseFloat(linesAttributes.getIn(['vertexOne', 'x']))
+    );
+    attributes.setIn(
+      ['vertexOne', 'y'],
+      parseFloat(linesAttributes.getIn(['vertexOne', 'y']))
+    );
+    attributes.setIn(
+      ['vertexTwo', 'x'],
+      parseFloat(linesAttributes.getIn(['vertexTwo', 'x']))
+    );
+    attributes.setIn(
+      ['vertexTwo', 'y'],
+      parseFloat(linesAttributes.getIn(['vertexTwo', 'y']))
+    );
   });
 
   return {
@@ -121,8 +142,10 @@ export function setLinesAttributes(linesAttributes) {
 }
 
 export function setHolesAttributes(holesAttributes) {
-
-  holesAttributes = holesAttributes.set('offset', parseFloat(holesAttributes.get('offset')));
+  holesAttributes = holesAttributes.set(
+    'offset',
+    parseFloat(holesAttributes.get('offset'))
+  );
 
   return {
     type: SET_HOLES_ATTRIBUTES,
@@ -168,7 +191,7 @@ export function initCatalog(catalog) {
   };
 }
 
-export function updateMouseCoord(coords = {x, y}) {
+export function updateMouseCoord(coords = { x, y }) {
   return {
     type: UPDATE_MOUSE_COORDS,
     coords
@@ -216,7 +239,7 @@ export function pasteProperties() {
   };
 }
 
-export function pushLastSelectedCatalogElementToHistory( element ) {
+export function pushLastSelectedCatalogElementToHistory(element) {
   return {
     type: PUSH_LAST_SELECTED_CATALOG_ELEMENT_TO_HISTORY,
     element
@@ -229,28 +252,28 @@ export function setAlterateState() {
   };
 }
 
-export function setMode( mode ) {
+export function setMode(mode) {
   return {
     type: SET_MODE,
     mode
   };
 }
 
-export function addHorizontalGuide( coordinate ) {
+export function addHorizontalGuide(coordinate) {
   return {
     type: ADD_HORIZONTAL_GUIDE,
     coordinate
   };
 }
 
-export function addVerticalGuide( coordinate ) {
+export function addVerticalGuide(coordinate) {
   return {
     type: ADD_VERTICAL_GUIDE,
     coordinate
   };
 }
 
-export function addCircularGuide( x, y, radius ) {
+export function addCircularGuide(x, y, radius) {
   return {
     type: ADD_CIRCULAR_GUIDE,
     x,
@@ -258,21 +281,21 @@ export function addCircularGuide( x, y, radius ) {
     radius
   };
 }
-export function removeHorizontalGuide( guideID ) {
+export function removeHorizontalGuide(guideID) {
   return {
     type: REMOVE_HORIZONTAL_GUIDE,
     guideID
   };
 }
 
-export function removeVerticalGuide( guideID ) {
+export function removeVerticalGuide(guideID) {
   return {
     type: REMOVE_VERTICAL_GUIDE,
     guideID
   };
 }
 
-export function removeCircularGuide( guideID ) {
+export function removeCircularGuide(guideID) {
   return {
     type: REMOVE_CIRCULAR_GUIDE,
     guideID
