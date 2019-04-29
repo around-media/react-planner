@@ -38,6 +38,9 @@ import {
 } from '../constants';
 
 import { Project } from '../class/export';
+import debounce from 'lodash.debounce';
+
+const debouncedExport = debounce(ExportScene, 200);
 
 export default function(state, action) {
   switch (action.type) {
@@ -48,7 +51,13 @@ export default function(state, action) {
       return Project.loadProject(state, action.sceneJSON).updatedState;
 
     case EXPORT_PROJECT:
-      ExportScene({ state, context: action.context, catalog: action.catalog });
+      console.log('export project reducer');
+      debouncedExport({
+        state,
+        context: action.context,
+        catalog: action.catalog
+      });
+      //ExportScene();
       return state;
 
     case OPEN_CATALOG:

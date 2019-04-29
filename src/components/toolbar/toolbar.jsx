@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { object, number, bool, array } from 'prop-types';
 import { MdSettings, MdUndo, MdDirectionsRun } from 'react-icons/md';
 import { FaFile, FaMousePointer, FaPlus } from 'react-icons/fa';
 import ToolbarButton from './toolbar-button';
@@ -55,6 +55,7 @@ const mapButtonsCb = (el, ind) => {
 export default class Toolbar extends Component {
   constructor(props, context) {
     super(props, context);
+    console.log(context);
     this.state = {};
   }
 
@@ -235,19 +236,20 @@ export default class Toolbar extends Component {
 }
 
 Toolbar.propTypes = {
-  state: PropTypes.object.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  allowProjectFileSupport: PropTypes.bool.isRequired,
-  toolbarButtons: PropTypes.array
+  state: object.isRequired,
+  width: number.isRequired,
+  height: number.isRequired,
+  allowProjectFileSupport: bool.isRequired,
+  toolbarButtons: array
 };
 
 Toolbar.contextTypes = {
-  projectActions: PropTypes.object.isRequired,
-  viewer2DActions: PropTypes.object.isRequired,
-  viewer3DActions: PropTypes.object.isRequired,
-  linesActions: PropTypes.object.isRequired,
-  holesActions: PropTypes.object.isRequired,
-  itemsActions: PropTypes.object.isRequired,
-  translator: PropTypes.object.isRequired
+  projectActions: object.isRequired,
+  viewer2DActions: object.isRequired,
+  viewer3DActions: object.isRequired,
+  linesActions: object.isRequired,
+  holesActions: object.isRequired,
+  itemsActions: object.isRequired,
+  translator: object.isRequired,
+  store: object.isRequired
 };

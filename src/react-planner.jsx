@@ -102,7 +102,11 @@ class ReactPlanner extends Component {
       contentH = height;
       planner = (
         <Fragment>
-          <CustomUI state={extractedState} {...props} />
+          <CustomUI
+            state={extractedState}
+            {...props}
+            store={this.context.store}
+          />
           {content}
         </Fragment>
       );
@@ -113,6 +117,7 @@ class ReactPlanner extends Component {
             width={toolbarW}
             height={toolbarH}
             state={extractedState}
+            store={this.context.store}
             {...props}
           />
           {content}
@@ -166,7 +171,8 @@ ReactPlanner.contextTypes = {
 ReactPlanner.childContextTypes = {
   ...objectsMap(actions, () => object),
   translator: object,
-  catalog: object
+  catalog: object,
+  store: object
 };
 
 ReactPlanner.defaultProps = {

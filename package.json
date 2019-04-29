@@ -73,6 +73,7 @@
     "immutable": "3.8.2",
     "immutablediff": "0.4.4",
     "immutablepatch": "0.5.0",
+    "lodash.debounce": "^4.0.8",
     "polylabel": "1.0.2",
     "prop-types": "15.7.2",
     "react-icons": "3.5.0",
