@@ -5,10 +5,11 @@ import * as SnapUtils from './snap';
 import * as SnapSceneUtils from './snap-scene';
 import * as history from './history';
 import * as ObjectUtils from './objects-utils';
+import ExportScene from './export-scene';
 import IDBroker from './id-broker';
 import NameGenerator from './name-generator';
 
-export { GeometryUtils, GraphInnerCycles, MathUtils, SnapUtils, SnapSceneUtils, history, IDBroker, NameGenerator, ObjectUtils };
+export { GeometryUtils, GraphInnerCycles, MathUtils, SnapUtils, SnapSceneUtils, history, IDBroker, NameGenerator, ObjectUtils, ExportScene };
 
 export default {
   GeometryUtils: GeometryUtils,
@@ -19,5 +20,6 @@ export default {
   history: history,
   IDBroker: IDBroker,
   NameGenerator: NameGenerator,
-  ObjectUtils: ObjectUtils
+  ObjectUtils: ObjectUtils,
+  ExportScene: ExportScene
 };

@@ -1,4 +1,4 @@
-import { NEW_PROJECT, LOAD_PROJECT, SAVE_PROJECT, OPEN_CATALOG, SELECT_TOOL_EDIT, UNSELECT_ALL, SET_PROPERTIES, SET_ITEMS_ATTRIBUTES, SET_LINES_ATTRIBUTES, SET_HOLES_ATTRIBUTES, REMOVE, UNDO, ROLLBACK, OPEN_PROJECT_CONFIGURATOR, SET_PROJECT_PROPERTIES, INIT_CATALOG, UPDATE_MOUSE_COORDS, UPDATE_ZOOM_SCALE, TOGGLE_SNAP, CHANGE_CATALOG_PAGE, GO_BACK_TO_CATALOG_PAGE, THROW_ERROR, THROW_WARNING, COPY_PROPERTIES, PASTE_PROPERTIES, PUSH_LAST_SELECTED_CATALOG_ELEMENT_TO_HISTORY, ALTERATE_STATE, SET_MODE, ADD_HORIZONTAL_GUIDE, ADD_VERTICAL_GUIDE, ADD_CIRCULAR_GUIDE, REMOVE_HORIZONTAL_GUIDE, REMOVE_VERTICAL_GUIDE, REMOVE_CIRCULAR_GUIDE } from '../constants';
+import { NEW_PROJECT, LOAD_PROJECT, SAVE_PROJECT, EXPORT_PROJECT, OPEN_CATALOG, SELECT_TOOL_EDIT, UNSELECT_ALL, SET_PROPERTIES, SET_ITEMS_ATTRIBUTES, SET_LINES_ATTRIBUTES, SET_HOLES_ATTRIBUTES, REMOVE, UNDO, ROLLBACK, OPEN_PROJECT_CONFIGURATOR, SET_PROJECT_PROPERTIES, INIT_CATALOG, UPDATE_MOUSE_COORDS, UPDATE_ZOOM_SCALE, TOGGLE_SNAP, CHANGE_CATALOG_PAGE, GO_BACK_TO_CATALOG_PAGE, THROW_ERROR, THROW_WARNING, COPY_PROPERTIES, PASTE_PROPERTIES, PUSH_LAST_SELECTED_CATALOG_ELEMENT_TO_HISTORY, ALTERATE_STATE, SET_MODE, ADD_HORIZONTAL_GUIDE, ADD_VERTICAL_GUIDE, ADD_CIRCULAR_GUIDE, REMOVE_HORIZONTAL_GUIDE, REMOVE_VERTICAL_GUIDE, REMOVE_CIRCULAR_GUIDE } from '../constants';
 
 export function loadProject(sceneJSON) {
   return {
@@ -16,6 +16,14 @@ export function newProject() {
 export function saveProject() {
   return {
     type: SAVE_PROJECT
+  };
+}
+
+export function exportProject(context, catalog) {
+  return {
+    type: EXPORT_PROJECT,
+    context: context,
+    catalog: catalog
   };
 }
 
@@ -60,7 +68,6 @@ export function setProperties(properties) {
 }
 
 export function setItemsAttributes(itemsAttributes) {
-
   itemsAttributes = itemsAttributes.set('rotation', parseFloat(itemsAttributes.get('rotation')));
 
   return {
@@ -70,7 +77,6 @@ export function setItemsAttributes(itemsAttributes) {
 }
 
 export function setLinesAttributes(linesAttributes) {
-
   linesAttributes = linesAttributes.withMutations(function (attributes) {
     attributes.setIn(['vertexOne', 'x'], parseFloat(linesAttributes.getIn(['vertexOne', 'x'])));
     attributes.setIn(['vertexOne', 'y'], parseFloat(linesAttributes.getIn(['vertexOne', 'y'])));
@@ -85,7 +91,6 @@ export function setLinesAttributes(linesAttributes) {
 }
 
 export function setHolesAttributes(holesAttributes) {
-
   holesAttributes = holesAttributes.set('offset', parseFloat(holesAttributes.get('offset')));
 
   return {

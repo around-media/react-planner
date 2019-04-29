@@ -126,7 +126,11 @@ var ReactPlanner = function (_Component) {
         planner = React.createElement(
           Fragment,
           null,
-          React.createElement(CustomUI, _extends({ state: extractedState }, props)),
+          React.createElement(CustomUI, _extends({
+            state: extractedState
+          }, props, {
+            store: this.context.store
+          })),
           content
         );
       } else {
@@ -136,7 +140,8 @@ var ReactPlanner = function (_Component) {
           React.createElement(Toolbar, _extends({
             width: toolbarW,
             height: toolbarH,
-            state: extractedState
+            state: extractedState,
+            store: this.context.store
           }, props)),
           content,
           React.createElement(Sidebar, _extends({
@@ -190,7 +195,8 @@ ReactPlanner.childContextTypes = _extends({}, objectsMap(actions, function () {
   return object;
 }), {
   translator: object,
-  catalog: object
+  catalog: object,
+  store: object
 });
 
 ReactPlanner.defaultProps = {

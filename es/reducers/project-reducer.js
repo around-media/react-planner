@@ -1,16 +1,28 @@
-import { history } from '../utils/export';
-import { LOAD_PROJECT, NEW_PROJECT, OPEN_CATALOG, SELECT_TOOL_EDIT, MODE_IDLE, UNSELECT_ALL, SET_PROPERTIES, SET_ITEMS_ATTRIBUTES, SET_LINES_ATTRIBUTES, SET_HOLES_ATTRIBUTES, REMOVE, UNDO, ROLLBACK, SET_PROJECT_PROPERTIES, OPEN_PROJECT_CONFIGURATOR, INIT_CATALOG, UPDATE_MOUSE_COORDS, UPDATE_ZOOM_SCALE, TOGGLE_SNAP, CHANGE_CATALOG_PAGE, GO_BACK_TO_CATALOG_PAGE, THROW_ERROR, THROW_WARNING, COPY_PROPERTIES, PASTE_PROPERTIES, PUSH_LAST_SELECTED_CATALOG_ELEMENT_TO_HISTORY, ALTERATE_STATE, SET_MODE, ADD_HORIZONTAL_GUIDE, ADD_VERTICAL_GUIDE, ADD_CIRCULAR_GUIDE, REMOVE_HORIZONTAL_GUIDE, REMOVE_VERTICAL_GUIDE, REMOVE_CIRCULAR_GUIDE } from '../constants';
+import { history, ExportScene } from '../utils/export';
+import { LOAD_PROJECT, NEW_PROJECT, OPEN_CATALOG, EXPORT_PROJECT, SELECT_TOOL_EDIT, MODE_IDLE, UNSELECT_ALL, SET_PROPERTIES, SET_ITEMS_ATTRIBUTES, SET_LINES_ATTRIBUTES, SET_HOLES_ATTRIBUTES, REMOVE, UNDO, ROLLBACK, SET_PROJECT_PROPERTIES, OPEN_PROJECT_CONFIGURATOR, INIT_CATALOG, UPDATE_MOUSE_COORDS, UPDATE_ZOOM_SCALE, TOGGLE_SNAP, CHANGE_CATALOG_PAGE, GO_BACK_TO_CATALOG_PAGE, THROW_ERROR, THROW_WARNING, COPY_PROPERTIES, PASTE_PROPERTIES, PUSH_LAST_SELECTED_CATALOG_ELEMENT_TO_HISTORY, ALTERATE_STATE, SET_MODE, ADD_HORIZONTAL_GUIDE, ADD_VERTICAL_GUIDE, ADD_CIRCULAR_GUIDE, REMOVE_HORIZONTAL_GUIDE, REMOVE_VERTICAL_GUIDE, REMOVE_CIRCULAR_GUIDE } from '../constants';
 
 import { Project } from '../class/export';
+import debounce from 'lodash.debounce';
+
+var debouncedExport = debounce(ExportScene, 200);
 
 export default function (state, action) {
-
   switch (action.type) {
     case NEW_PROJECT:
       return Project.newProject(state).updatedState;
 
     case LOAD_PROJECT:
       return Project.loadProject(state, action.sceneJSON).updatedState;
+
+    case EXPORT_PROJECT:
+      console.log('export project reducer');
+      debouncedExport({
+        state: state,
+        context: action.context,
+        catalog: action.catalog
+      });
+      //ExportScene();
+      return state;
 
     case OPEN_CATALOG:
       return Project.openCatalog(state).updatedState;
@@ -28,23 +40,33 @@ export default function (state, action) {
       return Project.unselectAll(state).updatedState;
 
     case SET_PROPERTIES:
-      state = state.merge({ sceneHistory: history.historyPush(state.sceneHistory, state.scene) });
+      state = state.merge({
+        sceneHistory: history.historyPush(state.sceneHistory, state.scene)
+      });
       return Project.setProperties(state, state.getIn(['scene', 'selectedLayer']), action.properties).updatedState;
 
     case SET_ITEMS_ATTRIBUTES:
-      state = state.merge({ sceneHistory: history.historyPush(state.sceneHistory, state.scene) });
+      state = state.merge({
+        sceneHistory: history.historyPush(state.sceneHistory, state.scene)
+      });
       return Project.setItemsAttributes(state, action.itemsAttributes).updatedState;
 
     case SET_LINES_ATTRIBUTES:
-      state = state.merge({ sceneHistory: history.historyPush(state.sceneHistory, state.scene) });
+      state = state.merge({
+        sceneHistory: history.historyPush(state.sceneHistory, state.scene)
+      });
       return Project.setLinesAttributes(state, action.linesAttributes).updatedState;
 
     case SET_HOLES_ATTRIBUTES:
-      state = state.merge({ sceneHistory: history.historyPush(state.sceneHistory, state.scene) });
+      state = state.merge({
+        sceneHistory: history.historyPush(state.sceneHistory, state.scene)
+      });
       return Project.setHolesAttributes(state, action.holesAttributes).updatedState;
 
     case REMOVE:
-      state = state.merge({ sceneHistory: history.historyPush(state.sceneHistory, state.scene) });
+      state = state.merge({
+        sceneHistory: history.historyPush(state.sceneHistory, state.scene)
+      });
       return Project.remove(state).updatedState;
 
     case UNDO:
@@ -54,11 +76,15 @@ export default function (state, action) {
       return Project.rollback(state).updatedState;
 
     case SET_PROJECT_PROPERTIES:
-      state = state.merge({ sceneHistory: history.historyPush(state.sceneHistory, state.scene) });
+      state = state.merge({
+        sceneHistory: history.historyPush(state.sceneHistory, state.scene)
+      });
       return Project.setProjectProperties(state, action.properties).updatedState;
 
     case OPEN_PROJECT_CONFIGURATOR:
-      state = state.merge({ sceneHistory: history.historyPush(state.sceneHistory, state.scene) });
+      state = state.merge({
+        sceneHistory: history.historyPush(state.sceneHistory, state.scene)
+      });
       return Project.openProjectConfigurator(state).updatedState;
 
     case INIT_CATALOG:
@@ -83,7 +109,9 @@ export default function (state, action) {
       return Project.copyProperties(state, action.properties).updatedState;
 
     case PASTE_PROPERTIES:
-      state = state.merge({ sceneHistory: history.historyPush(state.sceneHistory, state.scene) });
+      state = state.merge({
+        sceneHistory: history.historyPush(state.sceneHistory, state.scene)
+      });
       return Project.pasteProperties(state).updatedState;
 
     case PUSH_LAST_SELECTED_CATALOG_ELEMENT_TO_HISTORY:
@@ -96,7 +124,9 @@ export default function (state, action) {
       return Project.setMode(state, action.mode).updatedState;
 
     case ADD_HORIZONTAL_GUIDE:
-      state = state.merge({ sceneHistory: history.historyPush(state.sceneHistory, state.scene) });
+      state = state.merge({
+        sceneHistory: history.historyPush(state.sceneHistory, state.scene)
+      });
       return Project.addHorizontalGuide(state, action.coordinate).updatedState;
 
     case ADD_VERTICAL_GUIDE:
@@ -116,6 +146,5 @@ export default function (state, action) {
 
     default:
       return state;
-
   }
 }

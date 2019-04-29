@@ -9,7 +9,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { object, number, bool, array } from 'prop-types';
 import { MdSettings, MdUndo, MdDirectionsRun } from 'react-icons/md';
 import { FaFile, FaMousePointer, FaPlus } from 'react-icons/fa';
 import ToolbarButton from './toolbar-button';
@@ -78,6 +78,7 @@ var Toolbar = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Toolbar.__proto__ || Object.getPrototypeOf(Toolbar)).call(this, props, context));
 
+    console.log(context);
     _this.state = {};
     return _this;
   }
@@ -254,19 +255,20 @@ export default Toolbar;
 
 
 Toolbar.propTypes = {
-  state: PropTypes.object.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  allowProjectFileSupport: PropTypes.bool.isRequired,
-  toolbarButtons: PropTypes.array
+  state: object.isRequired,
+  width: number.isRequired,
+  height: number.isRequired,
+  allowProjectFileSupport: bool.isRequired,
+  toolbarButtons: array
 };
 
 Toolbar.contextTypes = {
-  projectActions: PropTypes.object.isRequired,
-  viewer2DActions: PropTypes.object.isRequired,
-  viewer3DActions: PropTypes.object.isRequired,
-  linesActions: PropTypes.object.isRequired,
-  holesActions: PropTypes.object.isRequired,
-  itemsActions: PropTypes.object.isRequired,
-  translator: PropTypes.object.isRequired
+  projectActions: object.isRequired,
+  viewer2DActions: object.isRequired,
+  viewer3DActions: object.isRequired,
+  linesActions: object.isRequired,
+  holesActions: object.isRequired,
+  itemsActions: object.isRequired,
+  translator: object.isRequired,
+  store: object.isRequired
 };
