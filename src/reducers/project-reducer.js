@@ -51,7 +51,6 @@ export default function(state, action) {
       return Project.loadProject(state, action.sceneJSON).updatedState;
 
     case EXPORT_PROJECT:
-      console.log('export project reducer');
       debouncedExport({
         state,
         context: action.context,

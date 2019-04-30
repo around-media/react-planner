@@ -55,7 +55,6 @@ const mapButtonsCb = (el, ind) => {
 export default class Toolbar extends Component {
   constructor(props, context) {
     super(props, context);
-    console.log(context);
     this.state = {};
   }
 
