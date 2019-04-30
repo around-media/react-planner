@@ -78,7 +78,6 @@ var Toolbar = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (Toolbar.__proto__ || Object.getPrototypeOf(Toolbar)).call(this, props, context));
 
-    console.log(context);
     _this.state = {};
     return _this;
   }

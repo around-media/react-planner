@@ -3,7 +3,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 import actions from '../actions/export';
 
 export default function consoleDebugger() {
-
   return function (store, stateExtractor) {
     window.ReactPlanner = _extends({}, actions, {
       getStore: function getStore() {
@@ -18,7 +17,7 @@ export default function consoleDebugger() {
         actions = actions.reverse();
         var dispatch = store.dispatch;
         var dispatchAction = function dispatchAction() {
-          console.info("There are other " + actions.length + " actions on stack");
+          console.info('There are other ' + actions.length + ' actions on stack');
           if (actions.length === 0) return;
           dispatch(actions.pop());
           if (actions.length === 0) return;
@@ -28,10 +27,10 @@ export default function consoleDebugger() {
       }
     });
 
-    console.groupCollapsed("ReactPlanner");
-    console.info("ReactPlanner is ready");
-    console.info("console.log(ReactPlanner)");
-    console.log(window.ReactPlanner);
-    console.groupEnd();
+    // console.groupCollapsed("ReactPlanner");
+    // console.info("ReactPlanner is ready");
+    // console.info("console.log(ReactPlanner)");
+    // console.log(window.ReactPlanner);
+    // console.groupEnd();
   };
 }

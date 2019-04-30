@@ -1,7 +1,6 @@
 import actions from '../actions/export';
 
 export default function consoleDebugger() {
-
   return (store, stateExtractor) => {
     window.ReactPlanner = {
       ...actions,
@@ -11,7 +10,7 @@ export default function consoleDebugger() {
       },
 
       getState() {
-        return stateExtractor(store.getState())
+        return stateExtractor(store.getState());
       },
 
       do(actions, delay = 300) {
@@ -28,10 +27,10 @@ export default function consoleDebugger() {
       }
     };
 
-    console.groupCollapsed("ReactPlanner");
-    console.info("ReactPlanner is ready");
-    console.info("console.log(ReactPlanner)");
-    console.log(window.ReactPlanner);
-    console.groupEnd();
-  }
+    // console.groupCollapsed("ReactPlanner");
+    // console.info("ReactPlanner is ready");
+    // console.info("console.log(ReactPlanner)");
+    // console.log(window.ReactPlanner);
+    // console.groupEnd();
+  };
 }
