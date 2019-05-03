@@ -18,10 +18,11 @@ const exportScene = ({ state, context, catalog }) => {
   let scene = state.get('scene');
   // LOAD DATA
   let planData = parseData(scene, actions, catalog);
-
   setTimeout(() => {
+    const { plan } = planData;
+    plan.position.set(plan.position.x, 0.1, plan.position.z);
     const exporter = new ColladaExporter();
-    exporter.parse(planData.plan, ({ data }) => {
+    exporter.parse(plan, ({ data }) => {
       let parsedFile = xml2js(data, { compact: true });
       parsedFile.COLLADA.asset['unit'] = {
         _attributes: { name: 'centimeter', meter: '0.01' }
