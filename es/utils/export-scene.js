@@ -22,10 +22,12 @@ var exportScene = function exportScene(_ref) {
   var scene = state.get('scene');
   // LOAD DATA
   var planData = parseData(scene, actions, catalog);
-
   setTimeout(function () {
+    var plan = planData.plan;
+
+    plan.position.set(plan.position.x, 0.1, plan.position.z);
     var exporter = new ColladaExporter();
-    exporter.parse(planData.plan, function (_ref2) {
+    exporter.parse(plan, function (_ref2) {
       var data = _ref2.data;
 
       var parsedFile = xml2js(data, { compact: true });
