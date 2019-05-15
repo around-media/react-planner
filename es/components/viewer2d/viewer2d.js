@@ -115,7 +115,6 @@ export default function Viewer2D(_ref, _ref2) {
   };
 
   var onMouseMove = function onMouseMove(viewerEvent) {
-
     //workaround that allow imageful component to work
     var evt = new Event('mousemove-planner-event');
     evt.viewerEvent = viewerEvent;
@@ -216,7 +215,6 @@ export default function Viewer2D(_ref, _ref2) {
         y = _mapCursorPosition3.y;
 
     switch (mode) {
-
       case constants.MODE_IDLE:
         var elementData = extractElementData(event.target);
 
@@ -250,8 +248,9 @@ export default function Viewer2D(_ref, _ref2) {
         break;
 
       case constants.MODE_DRAWING_LINE:
-        linesActions.endDrawingLine(x, y, state.snapMask);
-        linesActions.beginDrawingLine(layerID, x, y, state.snapMask);
+        linesActions.restartDrawingLine(layerID, x, y, state.snapMask);
+        // linesActions.endDrawingLine(x, y, state.snapMask);
+        // linesActions.beginDrawingLine(layerID, x, y, state.snapMask);
         break;
 
       case constants.MODE_DRAWING_HOLE:
@@ -330,7 +329,8 @@ export default function Viewer2D(_ref, _ref2) {
 
   return React.createElement(
     'div',
-    { style: {
+    {
+      style: {
         margin: 0,
         padding: 0,
         display: 'grid',
@@ -339,11 +339,22 @@ export default function Viewer2D(_ref, _ref2) {
         gridTemplateColumns: rulerSize + 'px ' + (width - rulerSize) + 'px',
         gridTemplateRows: rulerSize + 'px ' + (height - rulerSize) + 'px',
         position: 'relative'
-      } },
-    React.createElement('div', { style: { gridColumn: 1, gridRow: 1, backgroundColor: rulerBgColor } }),
+      }
+    },
+    React.createElement('div', {
+      style: { gridColumn: 1, gridRow: 1, backgroundColor: rulerBgColor }
+    }),
     React.createElement(
       'div',
-      { style: { gridRow: 1, gridColumn: 2, position: 'relative', overflow: 'hidden' }, id: 'rulerX' },
+      {
+        style: {
+          gridRow: 1,
+          gridColumn: 2,
+          position: 'relative',
+          overflow: 'hidden'
+        },
+        id: 'rulerX'
+      },
       sceneWidth ? React.createElement(RulerX, {
         unitPixelSize: rulerUnitPixelSize,
         zoom: sceneZoom,
@@ -359,7 +370,15 @@ export default function Viewer2D(_ref, _ref2) {
     ),
     React.createElement(
       'div',
-      { style: { gridColumn: 1, gridRow: 2, position: 'relative', overflow: 'hidden' }, id: 'rulerY' },
+      {
+        style: {
+          gridColumn: 1,
+          gridRow: 2,
+          position: 'relative',
+          overflow: 'hidden'
+        },
+        id: 'rulerY'
+      },
       sceneHeight ? React.createElement(RulerY, {
         unitPixelSize: rulerUnitPixelSize,
         zoom: sceneZoom,
@@ -398,9 +417,18 @@ export default function Viewer2D(_ref, _ref2) {
           null,
           React.createElement(
             'pattern',
-            { id: 'diagonalFill', patternUnits: 'userSpaceOnUse', width: '4', height: '4', fill: '#FFF' },
+            {
+              id: 'diagonalFill',
+              patternUnits: 'userSpaceOnUse',
+              width: '4',
+              height: '4',
+              fill: '#FFF'
+            },
             React.createElement('rect', { x: '0', y: '0', width: '4', height: '4', fill: '#FFF' }),
-            React.createElement('path', { d: 'M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2', style: { stroke: '#8E9BA2', strokeWidth: 1 } })
+            React.createElement('path', {
+              d: 'M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2',
+              style: { stroke: '#8E9BA2', strokeWidth: 1 }
+            })
           )
         ),
         React.createElement(

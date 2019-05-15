@@ -17,7 +17,6 @@ var Line = function () {
   _createClass(Line, null, [{
     key: 'create',
     value: function create(state, layerID, type, x0, y0, x1, y1, properties) {
-
       var lineID = IDBroker.acquireID();
 
       var _Vertex$add = Vertex.add(state, layerID, x0, y0, 'lines', lineID),
@@ -203,7 +202,6 @@ var Line = function () {
 
 
             if (GeometryUtils.isPointOnLineSegment(x1, y1, x2, y2, xp, yp)) {
-
               var newOffset = GeometryUtils.pointPositionOnLineSegment(x1, y1, x2, y2, xp, yp);
 
               if (newOffset >= 0 && newOffset <= 1) {
@@ -288,7 +286,11 @@ var Line = function () {
       state = state.setIn(['scene', 'layers', layerID, 'lines', lineID, 'vertices', vertexIndex], vertex.id);
       state = state.setIn(['scene', 'layers', layerID, 'lines', lineID], state.getIn(['scene', 'layers', layerID, 'lines', lineID]));
 
-      return { updatedState: state, line: state.getIn(['scene', 'layers', layerID, 'lines', lineID]), vertex: vertex };
+      return {
+        updatedState: state,
+        line: state.getIn(['scene', 'layers', layerID, 'lines', lineID]),
+        vertex: vertex
+      };
     }
   }, {
     key: 'selectToolDrawingLine',
@@ -389,7 +391,6 @@ var Line = function () {
   }, {
     key: 'endDrawingLine',
     value: function endDrawingLine(state, x, y) {
-
       if (state.snapMask && !state.snapMask.isEmpty()) {
         var snap = SnapUtils.nearestSnap(state.snapElements, x, y, state.snapMask);
         if (snap) {
@@ -423,7 +424,6 @@ var Line = function () {
   }, {
     key: 'beginDraggingLine',
     value: function beginDraggingLine(state, layerID, lineID, x, y) {
-
       var snapElements = SnapSceneUtils.sceneSnapElements(state.scene, new List(), state.snapMask);
 
       var layer = state.scene.layers.get(layerID);
@@ -436,7 +436,8 @@ var Line = function () {
         mode: MODE_DRAGGING_LINE,
         snapElements: snapElements,
         draggingSupport: Map({
-          layerID: layerID, lineID: lineID,
+          layerID: layerID,
+          lineID: lineID,
           startPointX: x,
           startPointY: y,
           startVertex0X: vertex0.x,
@@ -451,7 +452,6 @@ var Line = function () {
   }, {
     key: 'updateDraggingLine',
     value: function updateDraggingLine(state, x, y) {
-
       var draggingSupport = state.draggingSupport;
       var snapElements = state.snapElements;
 
@@ -561,7 +561,6 @@ var Line = function () {
       var newVertex1Y = draggingSupport.get('startVertex1Y') + diffY;
 
       if (state.snapMask && !state.snapMask.isEmpty()) {
-
         var curSnap0 = SnapUtils.nearestSnap(state.snapElements, newVertex0X, newVertex0Y, state.snapMask);
         var curSnap1 = SnapUtils.nearestSnap(state.snapElements, newVertex1X, newVertex1Y, state.snapMask);
 
@@ -656,7 +655,6 @@ var Line = function () {
   }, {
     key: 'setAttributes',
     value: function setAttributes(state, layerID, lineID, lineAttributes) {
-
       var lAttr = lineAttributes.toJS();
       var vertexOne = lAttr.vertexOne,
           vertexTwo = lAttr.vertexTwo,
@@ -667,7 +665,13 @@ var Line = function () {
       delete lAttr['vertexTwo'];
       delete lAttr['lineLength'];
 
-      state = state.mergeIn(['scene', 'layers', layerID, 'lines', lineID], fromJS(lAttr)).mergeIn(['scene', 'layers', layerID, 'vertices', vertexOne.id], { x: vertexOne.x, y: vertexOne.y }).mergeIn(['scene', 'layers', layerID, 'vertices', vertexTwo.id], { x: vertexTwo.x, y: vertexTwo.y }).mergeIn(['scene', 'layers', layerID, 'lines', lineID, 'misc'], new Map({ '_unitLength': lineLength._unit }));
+      state = state.mergeIn(['scene', 'layers', layerID, 'lines', lineID], fromJS(lAttr)).mergeIn(['scene', 'layers', layerID, 'vertices', vertexOne.id], {
+        x: vertexOne.x,
+        y: vertexOne.y
+      }).mergeIn(['scene', 'layers', layerID, 'vertices', vertexTwo.id], {
+        x: vertexTwo.x,
+        y: vertexTwo.y
+      }).mergeIn(['scene', 'layers', layerID, 'lines', lineID, 'misc'], new Map({ _unitLength: lineLength._unit }));
 
       state = Layer.mergeEqualsVertices(state, layerID, vertexOne.id).updatedState;
 
